@@ -40,6 +40,7 @@ function scatter_plot(X,Y,markersize,
         .append("text")
         .attr("class","label")
         .attr("text-anchor","middle")
+        .attr("font-weight",700)
         .text(xLabel)
 
     axis.append("g")
@@ -47,6 +48,7 @@ function scatter_plot(X,Y,markersize,
         .append("text")
         .attr("class","label")
         .attr("text-anchor","middle")
+        .attr("font-weight",700)
         .text(yLabel)
 
 
@@ -58,5 +60,5 @@ function scatter_plot(X,Y,markersize,
         .attr("text-anchor","middle")
         .text(title)
         .attr("class","plotTitle")
-
+        .attr("font-weight",900)
 }
