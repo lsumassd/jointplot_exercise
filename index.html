@@ -2,29 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>joint plot</title>
+    <title>Penguin Joint Plot Exercise</title>
 
     <script src="scatter_plot.js?2"></script>
     <script src="bar_plot.js?2"></script>
 
-    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="./styles/style.css">
     <style>
-        .fig{
+        .fig {
             fill: #faf8f8;
         }
-        table{
+
+        table {
             border: 1px solid #d2bcbc;
             border-collapse: collapse;
-            width: 60vw;
+            width: 48vw;
         }
-        td{
+
+        td {
             border: 1px solid #d2bcbc;
             border-collapse: collapse;
             padding: 10px;
             width: 10vw;
         }
     </style>
-    <script src="../lib/d3.js"></script>
+    <script src="./lib/d3.js"></script>
 
 
 </head>
@@ -32,57 +34,182 @@
 
 <!-- https://seaborn.pydata.org/generated/seaborn.jointplot.html -->
 <!--palmer_penguin_species: https://raw.githubusercontent.com/datavizpyr/data/master/palmer_penguin_species.tsv -->
+
+<h1 style="text-align: center"><u>Study of Penguin Behavior in Joint Plot Exercises</u></h1>
+
+<button onclick="darkmode()">Dark Mode</button>
+<button onclick="brightmode()">Bright Mode</button>
+<br><br>
+
 <table>
     <tr>
-        <td><svg width="500px" height="150px"  id="top"></svg></td>
-        <td width="10%">&nbsp</td>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <svg width="500px" height="120px" id="top1"></svg>
+                    </td>
+                    <td width="10%">
+                        <div>
+                            <svg id="legend1" height=150 width=110></svg>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <svg width="500px" height="400px" viewBox="0 0 1000 1000" id="main1"></svg>
+                    </td>
+                    <td>
+                        <svg width="120px" height="400px" id="right1"></svg>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <svg width="500px" height="120px" id="top2"></svg>
+                    </td>
+                    <td width="10%">
+                        <div>
+                            <svg id="legend2" height=150 width=110></svg>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <svg width="500px" height="400px" viewBox="0 0 1000 1000" id="main2"></svg>
+                    </td>
+                    <td>
+                        <svg width="120px" height="400px" id="right2"></svg>
+                    </td>
+                </tr>
+            </table>
+        </td>
     </tr>
     <tr>
-        <td><svg width="500px" height="500px" viewBox="0 0 1000 1000" id="main"></svg></td>
-        <td><svg width="150px" height="500px" id="right"></svg></td>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <svg width="500px" height="120px" id="top3"></svg>
+                    </td>
+                    <td width="10%">
+                        <div>
+                            <svg id="legend3" height=150 width=110></svg>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <svg width="500px" height="400px" viewBox="0 0 1000 1000" id="main3"></svg>
+                    </td>
+                    <td>
+                        <svg width="120px" height="400px" id="right3"></svg>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <svg width="500px" height="120px" id="top4"></svg>
+                    </td>
+                    <td width="10%">
+                        <div>
+                            <svg id="legend4" height=150 width=110></svg>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <svg width="500px" height="400px" viewBox="0 0 1000 1000" id="main4"></svg>
+                    </td>
+                    <td>
+                        <svg width="120px" height="400px" id="right4"></svg>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
     </tr>
 </table>
 
 <script>
-    let palmer_penguin_species = "../data/palmer_penguin_species.tsv";
+    let palmer_penguin_species = "./data/palmer_penguin_species.tsv";
     // loading data
     d3.tsv(palmer_penguin_species).then(main)
+
+    let island_list = ["Torgersen", "Biscoe", "Dream"]
+    let color_list = ["#76566f", "#a52a2a", "#4682b4"]
+    let gender_list = ["male", "female"]
 
     // Subplots
     let fig_main = d3.select("#main")
         .append("g")
         .append('rect')
-        .attr("class","fig")
-        .attr("width","100%")
-        .attr("height","100%")
+        .attr("class", "fig")
+        .attr("width", "100%")
+        .attr("height", "100%")
     // top svg
     let fig_top = d3.select("#top")
         .append("g")
         .append('rect')
-        .attr("class","fig")
-        .attr("width","100%")
-        .attr("height","100%")
+        .attr("class", "fig")
+        .attr("width", "100%")
+        .attr("height", "100%")
     // right svg
     let fig_right = d3.select("#right")
         .append("g")
         .append('rect')
-        .attr("class","fig")
-        .attr("width","100%")
-        .attr("height","100%")
+        .attr("class", "fig")
+        .attr("width", "100%")
+        .attr("height", "100%")
 
-    function main(data){
+    function darkmode() {
+        let elist = document.body.getElementsByTagName("*");
+        let color = "#3c3b42";
+        let color_fg = "white";
+        document.body.style.backgroundColor = color;
+        for (let element of elist) {
+            element.style.backgroundColor = color;
+            element.style.color = color_fg;
+        }
+    }
+
+    function brightmode() {
+        let elist = document.body.getElementsByTagName("*");
+        let color = "white";
+        let color_fg = "black";
+        document.body.style.backgroundColor = color;
+        for (let element of elist) {
+            element.style.backgroundColor = color;
+            element.style.color = color_fg;
+        }
+    }
+
+    function main(data) {
         // fetch data from table
-        let culmen_length_mm = d3.map(data,function (d){
-            return +d.culmen_length_mm})
-        let culmen_depth_mm = d3.map(data,function (d){
-            return +d.culmen_depth_mm})
-        let flipper_length_mm = d3.map(data,function (d){
-            return +d.flipper_length_mm})
-        let species = d3.map(data,function (d){
-            return d.species})
+        let culmen_length_mm = d3.map(data, function (d) {
+            return +d.culmen_length_mm
+        })
+        let culmen_depth_mm = d3.map(data, function (d) {
+            return +d.culmen_depth_mm
+        })
+        let flipper_length_mm = d3.map(data, function (d) {
+            return +d.flipper_length_mm
+        })
+        let body_mass_g = d3.map(data, function (d) {
+            return +d.body_mass_g
+        })
+        let species = d3.map(data, function (d) {
+            return d.species
+        })
         let species_types = new Set(species)
 
-        let species_code = d3.map(data,function (d) {
+        let species_code = d3.map(data, function (d) {
             species = d.species
             if (species === "Adelie") {
                 return 0
@@ -93,19 +220,99 @@
             }
         })
 
-        // main svg
-        scatter_plot(culmen_depth_mm,
-            culmen_length_mm,
-            10,
-            species_code,
-            'main'
-            ,title='Penguin Species',
-            xLabel="culmen_depth_mm",
-            yLabel="culmen_length_mm");
-        //#############
-        bar_plot(culmen_depth_mm, 10,'top')
-        h_bar_plot(culmen_length_mm,10,'right')
+        let island_code = d3.map(data, function (d) {
+            island = d.island
+            return island_list.indexOf(island)
+        })
 
+        let gender_code = d3.map(data, function (d) {
+            gender = d.gender
+            if (gender == "FEMALE") {
+                return 1
+            } else {
+                return 0
+            }
+        })
+
+        // main svg
+        scatter_plot(
+            culmen_depth_mm,
+            culmen_length_mm,
+            (parseFloat(flipper_length_mm) * 0.1),  // the flipper length without multiplication exceeds the plot size
+            island_code,
+            'main1',
+            title = 'Island',
+            xLabel = "culmen_depth_mm",
+            yLabel = "culmen_length_mm");
+        bar_plot(culmen_depth_mm, 10, 'top1')
+        h_bar_plot(culmen_length_mm, 10, 'right1')
+
+        //legend based on https://www.d3-graph-gallery.com/graph/custom_legend.html
+        let svg = d3.select("#legend1")
+        for (let i in island_list) {
+            svg.append("circle").attr("cx", 25).attr("cy", 30 + (i * 30)).attr("r", 10).style("fill", color_list[i])
+            svg.append("text").attr("x", 45).attr("y", 34 + (i * 30)).text(island_list[i]).style("font-size", "15px").attr("alignment-baseline", "middle")
+        }
+
+        scatter_plot(
+            culmen_length_mm,
+            culmen_depth_mm,
+            (parseFloat(flipper_length_mm) * 0.1),  // the flipper length without multiplication exceeds the plot size
+            island_code,
+            'main2',
+            title = 'Island',
+            xLabel = "culmen_length_mm",
+            yLabel = "culmen_depth_mm");
+        bar_plot(culmen_length_mm, 10, 'top2')
+        h_bar_plot(culmen_depth_mm, 10, 'right2')
+
+        //legend based on https://www.d3-graph-gallery.com/graph/custom_legend.html
+        svg = d3.select("#legend2")
+        for (let i in island_list) {
+            svg.append("circle").attr("cx", 25).attr("cy", 30 + (i * 30)).attr("r", 10).style("fill", color_list[i])
+            svg.append("text").attr("x", 45).attr("y", 34 + (i * 30)).text(island_list[i]).style("font-size", "15px").attr("alignment-baseline", "middle")
+        }
+
+        scatter_plot(
+            culmen_depth_mm,
+            culmen_length_mm,
+            (parseFloat(flipper_length_mm) * 0.1),  // the flipper length without multiplication exceeds the plot size
+            species_code,
+            'main3',
+            title = 'Penguin Species',
+            xLabel = "culmen_depth_mm",
+            yLabel = "culmen_length_mm");
+        bar_plot(culmen_depth_mm, 10, 'top3')
+        h_bar_plot(culmen_length_mm, 10, 'right3')
+
+        //legend based on https://www.d3-graph-gallery.com/graph/custom_legend.html
+        svg = d3.select("#legend3") // adelie = blue, gentoo = purple, chinstrap = red
+        svg.append("circle").attr("cx", 25).attr("cy", 60).attr("r", 10).style("fill", color_list[1])
+        svg.append("text").attr("x", 45).attr("y", 64).text("Chinstrap").style("font-size", "15px").attr("alignment-baseline", "middle")
+        svg.append("circle").attr("cx", 25).attr("cy", 90).attr("r", 10).style("fill", color_list[2])
+        svg.append("text").attr("x", 45).attr("y", 94).text("Adelie").style("font-size", "15px").attr("alignment-baseline", "middle")
+        svg.append("circle").attr("cx", 25).attr("cy", 120).attr("r", 10).style("fill", color_list[0])
+        svg.append("text").attr("x", 45).attr("y", 124).text("Gentoo").style("font-size", "15px").attr("alignment-baseline", "middle")
+
+
+        scatter_plot(
+            body_mass_g,
+            culmen_length_mm,
+            (parseFloat(flipper_length_mm) * 0.1),  // the flipper length without multiplication exceeds the plot size
+            gender_code,
+            'main4',
+            title = 'Penguin Gender',
+            xLabel = "body_mass_g",
+            yLabel = "culmen_length_mm");
+        bar_plot(body_mass_g, 10, 'top4')
+        h_bar_plot(culmen_length_mm, 10, 'right4')
+
+        //legend based on https://www.d3-graph-gallery.com/graph/custom_legend.html
+        svg = d3.select("#legend4")
+        svg.append("circle").attr("cx", 25).attr("cy", 60).attr("r", 10).style("fill", color_list[1])
+        svg.append("text").attr("x", 45).attr("y", 64).text("female").style("font-size", "15px").attr("alignment-baseline", "middle")
+        svg.append("circle").attr("cx", 25).attr("cy", 90).attr("r", 10).style("fill", color_list[2])
+        svg.append("text").attr("x", 45).attr("y", 94).text("male").style("font-size", "15px").attr("alignment-baseline", "middle")
     }
 </script>
 
